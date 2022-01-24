@@ -1,0 +1,21 @@
+.form{
+  width: 100%;
+  .box{
+    height: 500px;
+  }
+  .box *{
+    margin: 10px;
+  }
+  .buttons *{
+    width: 70px;
+    height: 30px;
+    background: white;
+    color: brown;
+    border: 1px solid brown;
+    border-radius: 15px;
+  }
+  .buttons *:hover{
+    color: white;
+    background: brown;
+  }
+}

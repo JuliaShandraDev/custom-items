@@ -1,0 +1,8 @@
+<input class="input"
+  [value]="value"
+  (input)="updateValue($event)"
+  (blur)="onTouched()"
+  [disabled]="disabled"
+  type="text"
+  placeholder="Enter value"
+/>
