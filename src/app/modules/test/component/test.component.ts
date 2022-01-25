@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormService} from "../../../service/form.service";
 
 @Component({
   selector: 'app-test',
@@ -7,17 +8,31 @@ import {FormBuilder, FormGroup} from '@angular/forms';
   styleUrls: ['./test.component.scss']
 })
 export class TestComponent implements OnInit {
-  form: FormGroup;
+  public form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private formService: FormService
+  ) {
   }
 
   ngOnInit(): void {
+    // this.testInfo$ = this.formService.testInfo$;
     this.form = this.fb.group({
-      text: ['']
+      text: [''],
+      email: [''],
+      textarea: [''],
+      select: ['']
     });
+    this.initForm();
   }
-
+  initForm(): void{
+    this.form = this.fb.group({
+      text: [null, [Validators.required, Validators.maxLength(5)]],
+      email: [null, [Validators.required, Validators.pattern("/^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      textarea: [null, [Validators.required, Validators.maxLength(10)]],
+    })
+}
   enable(): void {
     this.form.enable();
   }
@@ -36,5 +51,13 @@ export class TestComponent implements OnInit {
 
   resetForm(): void {
     this.form.reset();
+  }
+  resetValidationField(): void {
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
+    this.form.updateValueAndValidity();
+  }
+  submit():void {
+    this.formService.testInfo$.next(this.form.value)
   }
 }

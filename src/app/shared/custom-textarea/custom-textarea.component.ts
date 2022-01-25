@@ -1,18 +1,17 @@
-import { Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {Component, forwardRef, OnInit} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
-  selector: 'app-custom-input',
-  templateUrl: './custom-input.component.html',
-  styleUrls: ['./custom-input.component.scss'],
+  selector: 'app-custom-textarea',
+  templateUrl: './custom-textarea.component.html',
+  styleUrls: ['./custom-textarea.component.scss'],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => CustomInputComponent),
+    useExisting: forwardRef(() => CustomTextareaComponent),
     multi: true,
   }],
 })
-export class CustomInputComponent implements ControlValueAccessor{
-  @Input() type: string;
+export class CustomTextareaComponent implements ControlValueAccessor{
   value = '';
   disabled = false;
   private onChange = (value: any) => {};
@@ -29,7 +28,6 @@ export class CustomInputComponent implements ControlValueAccessor{
   }
 
   writeValue(outsideValue: string) {
-    console.log('outsideValue', outsideValue)
     // получить из Forms API
     this.value = outsideValue;
   }

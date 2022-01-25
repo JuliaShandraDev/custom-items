@@ -1,1 +1,12 @@
-<p>custom-select works!</p>
+<mat-form-field appearance="fill" class="select">
+  <mat-label>Select Animal</mat-label>
+  <mat-select [formControl]="animalControl" [value]="value" (input)="updateValue($event)" (blur)="onTouched()" [disabled]="disabled" required>
+    <mat-option>Nothing</mat-option>
+    <mat-option *ngFor="let animal of animals" [value]="animal">
+      {{animal.name}}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error>
+  <mat-hint>{{animalControl.value?.sound}}</mat-hint>
+</mat-form-field>
+<!--[value]="value" (input)="updateValue($event)" (blur)="onTouched()" [disabled]="disabled" !!!!-->

@@ -1,22 +1,34 @@
 import { NgModule } from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 
+// import {SelectHintErrorExample} from './select-hint-error-example';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatNativeDateModule} from '@angular/material/core';
 import { CustomInputComponent } from "./custom-input/custom-input.component";
 import { CustomSelectComponent } from "./custom-select/custom-select.component";
-import { CustomTexareaComponent } from "./custom-texarea/custom-texarea.component";
+import { CustomTextareaComponent } from "./custom-textarea/custom-textarea.component";
+import {MatExpansionModule} from '@angular/material/expansion';
+import { MaterialExampleModule } from  'src/matirial.module'
 
 
 @NgModule({
   declarations: [
-    CustomTexareaComponent,
+    CustomTextareaComponent,
     CustomSelectComponent,
     CustomInputComponent
   ],
   imports: [
-    CommonModule
+    BrowserAnimationsModule,
+    CommonModule,
+    MatExpansionModule,
+    MaterialExampleModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatNativeDateModule
   ],
   exports: [
-    CustomTexareaComponent,
+    CustomTextareaComponent,
     CustomSelectComponent,
     CustomInputComponent
   ]

@@ -1,11 +1,22 @@
 <div class="form" [formGroup]="form">
   <div class="col centered box">
-    <app-custom-input formControlName="text"></app-custom-input>
+    <app-custom-input [type]="'text'" formControlName="text" *ngIf="form.get('text') as text" (click)="resetValidationField()"
+                      [class.invalid]="text?.touched && !text?.valid"></app-custom-input>
+    <app-custom-input [type]="'email'" formControlName="email" *ngIf="form.get('email') as email" (click)="resetValidationField()"
+                      [class.invalid]="email?.touched && !email?.valid"></app-custom-input>
+    <app-custom-textarea formControlName="textarea" *ngIf="form.get('textarea') as textarea" (click)="resetValidationField()"
+                         [class.invalid]="textarea?.touched && !textarea?.valid"></app-custom-textarea>
+<!--    <div class="error-message" *ngIf="form?.touched && !form?.valid">-->
+<!--      Required-->
+<!--    </div>-->
+    <app-custom-select formControlName="select"></app-custom-select>
   <div class="row buttons">
-    <button (click)="enable()">enable</button>
-    <button (click)="disable()">disable</button>
+    <button (click)="enable()">Enable</button>
+    <button (click)="disable()">Disable</button>
     <button (click)="resetForm()">Reset</button>
+    <button (click)="submit()">Submit</button>
   </div>
   </div>
 </div>
+<!--type!!!-->
 
