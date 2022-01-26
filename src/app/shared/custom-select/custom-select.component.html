@@ -1,7 +1,5 @@
 <div>
-  <label for="power">Hero Power</label>
-  <select id="power" name="power" class="form-control"
-          required [(ngModel)]="hero.power" #power="ngModel" >
+  <select id="power" name="power" class="select" [value]="value" (input)="updateValue($event)" (blur)="onTouched()" [disabled]="disabled">
     <option *ngFor="let p of powers" [value]="p">{{p}}</option>
   </select>
 </div>

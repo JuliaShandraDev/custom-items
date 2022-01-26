@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 
-// import {SelectHintErrorExample} from './select-hint-error-example';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatNativeDateModule} from '@angular/material/core';
 import { CustomInputComponent } from "./custom-input/custom-input.component";

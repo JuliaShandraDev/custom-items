@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {FormService} from "../../../service/form.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {CustomValidators} from "../../../service/form-validators";
@@ -12,6 +12,11 @@ import {CustomValidators} from "../../../service/form-validators";
 export class TestComponent implements OnInit {
 
   public signUpForm: FormGroup;
+  public messages = {
+    required: 'This field is required',
+    password: 'This password too short',
+    textarea: 'This textarea too short'}
+
   public formErrors = {
     name: '',
     email: '',
@@ -51,9 +56,9 @@ export class TestComponent implements OnInit {
     this.signUpForm = this.form.group({
       name: ['', [Validators.required, CustomValidators.validateCharacters]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(5)]],
-      textarea: ['', [Validators.required, Validators.maxLength(5)]],
-      // select: ['', [Validators.required]],
+      password: new FormControl('', [Validators.minLength(5)]),
+      textarea: new FormControl('', [Validators.minLength(10)]),
+      select: ['', [Validators.required]]
     });
 
     // on each value change we call the validateForm function

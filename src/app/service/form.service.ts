@@ -18,8 +18,6 @@ export class FormService {
     const messages = {
       required: 'This field is required',
       email: 'This email address is invalid',
-      password: 'This email too short',
-      textarea: 'This textarea too short',
       invalid_characters: (matches: any[]) => {
 
         let matchedCharacters = matches;

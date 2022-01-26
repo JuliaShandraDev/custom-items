@@ -1,16 +1,23 @@
-<div class="form" [formGroup]="signUpForm">
+<form class="form" [formGroup]="signUpForm">
   <div class="col centered box">
     <app-custom-input [type]="'text'" [name]="'name'" [placeholder]="'Name'" formControlName="name"></app-custom-input>
     <p *ngIf="formErrors.name" class="error-message">{{ formErrors.name }}</p>
+
 
     <app-custom-input [type]="'email'" [name]="'email'" [placeholder]="'Email'" formControlName="email"></app-custom-input>
     <p *ngIf="formErrors.email" class="error-message">{{ formErrors.email }}</p>
 
     <app-custom-input [type]="'password'" [name]="'password'" [placeholder]="'Password'" formControlName="password"></app-custom-input>
     <p *ngIf="formErrors.password" class="error-message">{{ formErrors.password }}</p>
+    <p *ngIf="signUpForm.controls['password'].invalid && signUpForm.controls['password'].errors" class="error-message">{{
+      signUpForm.controls['password'].value === "" ? messages.required : messages.password
+      }}</p>
 
     <app-custom-textarea formControlName="textarea"></app-custom-textarea>
     <p *ngIf="formErrors.textarea" class="error-message">{{ formErrors.textarea }}</p>
+    <p *ngIf="signUpForm.controls['textarea'].invalid && signUpForm.controls['textarea'].errors" class="error-message">{{
+      signUpForm.controls['textarea'].value === "" ? messages.required : messages.textarea
+      }}</p>
 
     <app-custom-select formControlName="select"></app-custom-select>
     <p *ngIf="formErrors.select" class="error-message">{{ formErrors.select }}</p>
@@ -22,4 +29,4 @@
     <button (click)="submit()">Submit</button>
   </div>
   </div>
-</div>
+</form>
