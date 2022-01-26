@@ -1,15 +1,20 @@
-<div class="form" [formGroup]="form">
+<div class="form" [formGroup]="signUpForm">
   <div class="col centered box">
-    <app-custom-input [type]="'text'" formControlName="text" *ngIf="form.get('text') as text" (click)="resetValidationField()"
-                      [class.invalid]="text?.touched && !text?.valid"></app-custom-input>
-    <app-custom-input [type]="'email'" formControlName="email" *ngIf="form.get('email') as email" (click)="resetValidationField()"
-                      [class.invalid]="email?.touched && !email?.valid"></app-custom-input>
-    <app-custom-textarea formControlName="textarea" *ngIf="form.get('textarea') as textarea" (click)="resetValidationField()"
-                         [class.invalid]="textarea?.touched && !textarea?.valid"></app-custom-textarea>
-<!--    <div class="error-message" *ngIf="form?.touched && !form?.valid">-->
-<!--      Required-->
-<!--    </div>-->
+    <app-custom-input [type]="'text'" [name]="'name'" [placeholder]="'Name'" formControlName="name"></app-custom-input>
+    <p *ngIf="formErrors.name" class="error-message">{{ formErrors.name }}</p>
+
+    <app-custom-input [type]="'email'" [name]="'email'" [placeholder]="'Email'" formControlName="email"></app-custom-input>
+    <p *ngIf="formErrors.email" class="error-message">{{ formErrors.email }}</p>
+
+    <app-custom-input [type]="'password'" [name]="'password'" [placeholder]="'Password'" formControlName="password"></app-custom-input>
+    <p *ngIf="formErrors.password" class="error-message">{{ formErrors.password }}</p>
+
+    <app-custom-textarea formControlName="textarea"></app-custom-textarea>
+    <p *ngIf="formErrors.textarea" class="error-message">{{ formErrors.textarea }}</p>
+
     <app-custom-select formControlName="select"></app-custom-select>
+    <p *ngIf="formErrors.select" class="error-message">{{ formErrors.select }}</p>
+
   <div class="row buttons">
     <button (click)="enable()">Enable</button>
     <button (click)="disable()">Disable</button>
@@ -18,5 +23,3 @@
   </div>
   </div>
 </div>
-<!--type!!!-->
-

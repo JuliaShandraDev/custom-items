@@ -13,6 +13,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class CustomInputComponent implements ControlValueAccessor{
   @Input() type: string;
+  @Input() name: string;
+  @Input() placeholder: string;
   value = '';
   disabled = false;
   private onChange = (value: any) => {};

@@ -4,6 +4,8 @@
          (input)="updateValue($event)"
          (blur)="onTouched()"
          [disabled]="disabled"
-         placeholder="Enter value"
+         placeholder={{placeholder}}
+         type={{type}}
+         name={{name}}
   />
 </div>

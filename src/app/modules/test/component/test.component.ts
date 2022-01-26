@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FormService} from "../../../service/form.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {CustomValidators} from "../../../service/form-validators";
 
 @Component({
   selector: 'app-test',
@@ -8,41 +10,75 @@ import {FormService} from "../../../service/form.service";
   styleUrls: ['./test.component.scss']
 })
 export class TestComponent implements OnInit {
-  public form: FormGroup;
+
+  public signUpForm: FormGroup;
+  public formErrors = {
+    name: '',
+    email: '',
+    password: '',
+    textarea: '',
+    select: '',
+  };
 
   constructor(
-    private fb: FormBuilder,
-    private formService: FormService
-  ) {
+    public form: FormBuilder,
+    public FormService: FormService,
+    public snackbar: MatSnackBar,
+  ) {}
+
+  public submit() {
+
+    // mark all fields as touched
+    this.FormService.markFormGroupTouched(this.signUpForm);
+
+    // right before we submit our form to the server we check if the form is valid
+    // if not, we pass the form to the validateform function again. Now with check dirty false
+    // this means we check every form field independent of wether it's touched
+    if (this.signUpForm.valid) {
+
+      this.snackbar.open('Succesfully submitted a valid form. yay!', 'Close', {
+        duration: 3000,
+      });
+
+      this.signUpForm.reset();
+    } else {
+      this.formErrors = this.FormService.validateForm(this.signUpForm, this.formErrors, false)
+    }
   }
 
-  ngOnInit(): void {
-    // this.testInfo$ = this.formService.testInfo$;
-    this.form = this.fb.group({
-      text: [''],
-      email: [''],
-      textarea: [''],
-      select: ['']
+  // build the user edit form
+  public buildForm() {
+    this.signUpForm = this.form.group({
+      name: ['', [Validators.required, CustomValidators.validateCharacters]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
+      textarea: ['', [Validators.required, Validators.maxLength(5)]],
+      // select: ['', [Validators.required]],
     });
-    this.initForm();
+
+    // on each value change we call the validateForm function
+    // We only validate form controls that are dirty, meaning they are touched
+    // the result is passed to the formErrors object
+    this.signUpForm.valueChanges.subscribe((data) => {
+      this.formErrors = this.FormService.validateForm(this.signUpForm, this.formErrors, true)
+    });
   }
-  initForm(): void{
-    this.form = this.fb.group({
-      text: [null, [Validators.required, Validators.maxLength(5)]],
-      email: [null, [Validators.required, Validators.pattern("/^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-      textarea: [null, [Validators.required, Validators.maxLength(10)]],
-    })
-}
+
+  // initiate component
+  public ngOnInit() {
+    this.buildForm();
+  }
+
   enable(): void {
-    this.form.enable();
+    this.signUpForm.enable();
   }
 
   disable(): void {
-    this.form.disable();
+    this.signUpForm.disable();
   }
 
   subscribe(): void {
-    this.form.valueChanges.subscribe(console.log);
+    this.signUpForm.valueChanges.subscribe(console.log);
   }
 
   setValue(value: string): void {
@@ -50,14 +86,11 @@ export class TestComponent implements OnInit {
   }
 
   resetForm(): void {
-    this.form.reset();
+    this.signUpForm.reset();
   }
   resetValidationField(): void {
-    this.form.markAsPristine();
-    this.form.markAsUntouched();
-    this.form.updateValueAndValidity();
-  }
-  submit():void {
-    this.formService.testInfo$.next(this.form.value)
+    this.signUpForm.markAsPristine();
+    this.signUpForm.markAsUntouched();
+    this.signUpForm.updateValueAndValidity();
   }
 }
